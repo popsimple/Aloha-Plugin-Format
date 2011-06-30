@@ -29,7 +29,7 @@
 		/**
 		 * default button configuration
 		 */
-		config: [ 'b', 'i','del','sub','sup', 'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'pre', 'removeFormat'],
+		config: [ 'strong', 'b', 'i','del','sub','sup', 'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'pre', 'removeFormat'],
 	
 		/**
 		 * Initialize the plugin and set initialize flag on true
@@ -106,6 +106,7 @@
 					case 'code':
 					case 'abbr':
 					case 'del':
+					case 'strong':
 					case 'sub':
 					case 'sup':
 						that.buttons[button] = {'button' : new Aloha.ui.Button({
@@ -224,6 +225,8 @@
 					foundMultiSplit, i, j, multiSplitItem;
 				
 				jQuery.each(that.buttons, function(index, button) {
+					// set to false to prevent multiple buttons to be active when they should not
+					statusWasSet = false;
 					for ( i = 0; i < rangeObject.markupEffectiveAtStart.length; i++) {
 						effectiveMarkup = rangeObject.markupEffectiveAtStart[ i ];
 						if (Aloha.Selection.standardTextLevelSemanticsComparator(effectiveMarkup, button.markup)) {
