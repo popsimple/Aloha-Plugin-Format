@@ -276,7 +276,7 @@
 			// FIXME: Very ugly, quick implementation must be changed after selection.js is consolidated
 			Aloha.Selection.changeMarkupOnSelection(jQuery('<p></p>'));
 	
-			var formats = ['b', 'i', 'cite', 'q', 'code', 'abbr', 'del', 'sub', 'sup'],
+			var formats = [ 'strong', 'b', 'i', 'cite', 'q', 'code', 'abbr', 'del', 'sub', 'sup'],
 				rangeObject = Aloha.Selection.rangeObject,
 				startObj = jQuery(rangeObject.startContainer),
 				limitObj = jQuery(rangeObject.limitObject),
