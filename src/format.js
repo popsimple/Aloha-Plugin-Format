@@ -25,7 +25,7 @@
 		 * Configure the available languages
 		 */
 		languages: ['en', 'de', 'fr', 'eo', 'fi', 'ru', 'it', 'pl'],
-	
+
 		/**
 		 * default button configuration
 		 */
@@ -270,40 +270,23 @@
 		 * Removes all formatting from the current selection.
 		 */
 		removeFormat: function() {
-			// FIXME: Very ugly, quick implementation must be changed after selection.js is consolidated
-			Aloha.Selection.changeMarkupOnSelection(jQuery('<p></p>'));
-	
+
 			var formats = ['b', 'i', 'cite', 'q', 'code', 'abbr', 'del', 'sub', 'sup'],
 				rangeObject = Aloha.Selection.rangeObject,
-				startObj = jQuery(rangeObject.startContainer),
-				limitObj = jQuery(rangeObject.limitObject),
-				parent, index, i;
-	
-			if (rangeObject.isCollapsed() || startObj === limitObj) {
+				i;
+
+			if (rangeObject.isCollapsed()) {
 				return;
 			}
-	
-			// Iterate up from the start container to the limit object and apply all markups found once (remove them)
-			parent = startObj.parent();
-			while (parent.get(0) !== limitObj.get(0)) {
-				index = $.inArray(parent.get(0).nodeName.toLowerCase(),formats);
-				parent = parent.parent();
-				if (index != -1) {
-					Aloha.Selection.changeMarkupOnSelection(jQuery('<'+formats[index]+'></'+formats[index]+'>'));
-					formats.splice(index, 1);
-				}
+
+			for (i = 0; i < formats.length; i++) {
+				GENTICS.Utils.Dom.removeMarkup(rangeObject, jQuery('<' + formats[i] + '></' + formats[i] + '>'), Aloha.activeEditable.obj);
 			}
-	
-			// Iterate over the rest of the available markups and apply them twice
-			for ( i in formats) {
-				if ( formats.hasOwnProperty(i) ) {
-					Aloha.Selection.changeMarkupOnSelection(jQuery('<'+formats[i]+'></'+formats[i]+'>'));
-					Aloha.Selection.changeMarkupOnSelection(jQuery('<'+formats[i]+'></'+formats[i]+'>'));
-				}
-			}
-	
+
+			// select the modified range
+			rangeObject.select();
 			// TODO: trigger event - removed Format
-	
+
 		},
 	
 		/**
