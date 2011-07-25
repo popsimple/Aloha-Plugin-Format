@@ -286,7 +286,7 @@ GENTICS.Aloha.Format.removeFormat = function() {
 	}
 	
 	// Iterate over the rest of the available markups and apply them twice
-	for (var i in formats) {
+	for (var i = 0; i < formats.length; i++) {
 		GENTICS.Aloha.Selection.changeMarkupOnSelection(jQuery('<'+formats[i]+'></'+formats[i]+'>'));
 		GENTICS.Aloha.Selection.changeMarkupOnSelection(jQuery('<'+formats[i]+'></'+formats[i]+'>'));
 	}
